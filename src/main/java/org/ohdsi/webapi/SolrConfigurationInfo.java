@@ -1,4 +1,4 @@
-package org.ohdsi.webapi.vocabulary.solr;
+package org.ohdsi.webapi;
 
 import org.ohdsi.info.ConfigurationInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,7 @@ import java.util.List;
 
 @Component
 public class SolrConfigurationInfo extends ConfigurationInfo {
-    private static final String KEY = "vocabulary";
+    private static final String KEY = "search";
     
     @Autowired
     public SolrConfigurationInfo(SolrSearchClient solrSearchClient) {

@@ -1,4 +1,4 @@
-package org.ohdsi.webapi.vocabulary.solr;
+package org.ohdsi.webapi;
 
 import java.util.Arrays;
 import java.util.HashSet;

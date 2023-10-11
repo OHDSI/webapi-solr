@@ -1,4 +1,4 @@
-package org.ohdsi.webapi.vocabulary.solr;
+package org.ohdsi.webapi.vocabulary;
 
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -12,14 +12,16 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.ohdsi.vocabulary.Concept;
-import org.ohdsi.vocabulary.SearchProviderConfig;
-import org.ohdsi.vocabulary.SearchProvider;
+import org.ohdsi.vocabulary.VocabularySearchProvider;
+import org.ohdsi.vocabulary.VocabularySearchProviderConfig;
+import org.ohdsi.webapi.SolrSearchClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,10 +29,10 @@ import java.util.Date;
 import java.util.HashSet;
 
 @Component
-public class SolrSearchProvider implements SearchProvider {
+public class VocabularySolrSearchProvider implements VocabularySearchProvider {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
-    private static final int SOLR_PRIORITY = 1000;
+    private static final int SOLR_SEARCH_PRIORITY = 1000;
     private static HashSet<String> solrCores = new HashSet<>();
 
     @Autowired
@@ -54,11 +56,11 @@ public class SolrSearchProvider implements SearchProvider {
 
     @Override
     public int getPriority() {
-        return SOLR_PRIORITY;
+        return SOLR_SEARCH_PRIORITY;
     }
 
     @Override
-    public Collection<Concept> executeSearch(SearchProviderConfig config, String query, String rows) throws IOException, SolrServerException {
+    public Collection<Concept> executeSearch(VocabularySearchProviderConfig config, String query, String rows) throws IOException, SolrServerException {
         ArrayList<Concept> concepts = new ArrayList<>();
         SolrClient client = solrSearchClient.getSolrClient(config.getVersionKey());
 
